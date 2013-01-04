@@ -12,7 +12,7 @@
     <div class="container">
 
         <h1>Music Player</h1>
-        <p class="lead">This application lets you play your music stored on your remoteStorage server.</p>
+        <p class="lead">This application lets you play your music.</p>
 
         
         <audio id="player" controls="true"></audio>
@@ -34,7 +34,11 @@
             {{fields entry}}
                 <tr>
                     <td>
-                        <a href="#" data-file-name="{{>~key}}">{{>~key}}</a>
+                    {{if ~isDirectory(~key)}}
+                        <a href="#" data-current-dir="{{>#parent.parent.data.dirName}}" data-dir-name="{{>~key}}">{{>~key}}</a>
+                    {{else}}
+                        <span>{{>~key}}</span> <i data-file-name="/{{>~key}}" class="icon-play"></i>
+                    {{/if}}
                     </td>
                 </tr>
             {{/fields}}
@@ -82,6 +86,13 @@
 			return fieldsArray;
 		}
 	});
+
+    $.views.helpers({
+		isDirectory: function( name ) {
+            return name.lastIndexOf("/") === name.length - 1;
+		}
+	});
+
     </script>
   </body>
 </html>

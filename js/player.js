@@ -1,5 +1,8 @@
 $(document).ready(function () {
 
+    // rootUri, this should be available through fragment or using WebFinger
+    var rootUri = apiEndpoint + "/admin/";
+
     var apiScope = ["music:r"];
 
     jso_configure({
@@ -12,25 +15,21 @@ $(document).ready(function () {
         "html-music-player": apiScope
     });
 
-    function renderFolderList() {
-        var url = apiEndpoint + "/admin/music/";
+    function renderFolderList(dirName) {
         var accessToken = jso_getToken("html-music-player", apiScope);
-
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
+        xhr.open("GET", rootUri + "music" + dirName, true);
         xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
         xhr.onload = function(e) {
-            $("#folderListTable").html($("#folderListTemplate").render({entry: JSON.parse(xhr.responseText)}));
+            $("#folderListTable").html($("#folderListTemplate").render({dirName: dirName, entry: JSON.parse(xhr.responseText)}));
         }
         xhr.send();
     }
 
-    $(document).on('click', '#folderListTable a', function() {
-        var url = apiEndpoint + "/admin/music/" + $(this).data("fileName");
+    $(document).on('click', '#folderListTable i', function() {
         var accessToken = jso_getToken("html-music-player", apiScope);
-
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", url, true);
+        xhr.open("GET", rootUri + "music" + $(this).data("fileName"), true);
         xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
         xhr.responseType = "arraybuffer";
         xhr.onload = function(e) {
@@ -41,5 +40,9 @@ $(document).ready(function () {
         xhr.send();
     });
 
-    renderFolderList();
+    $(document).on('click', '#folderListTable a', function() {
+        renderFolderList($(this).data('currentDir') + $(this).data('dirName'));
+    });
+
+    renderFolderList("/");
 });
