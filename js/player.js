@@ -26,7 +26,7 @@ $(document).ready(function () {
         xhr.send();
     }
 
-    $(document).on('click', '#folderListTable i', function() {
+    $(document).on('click', '#folderListTable a.file', function() {
         var accessToken = jso_getToken("html-music-player", apiScope);
         var xhr = new XMLHttpRequest();
         xhr.open("GET", rootUri + "music" + $(this).data("fileName"), true);
@@ -40,7 +40,7 @@ $(document).ready(function () {
         xhr.send();
     });
 
-    $(document).on('click', '#folderListTable a', function() {
+    $(document).on('click', '#folderListTable a.dir', function() {
         renderFolderList($(this).data('currentDir') + $(this).data('dirName'));
     });
 
