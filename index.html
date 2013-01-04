@@ -1,0 +1,87 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Music Player</title>
+    <link href="ext/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="ext/bootstrap/css/bootstrap-responsive.min.css" rel="stylesheet">
+</head>
+
+<body>
+    <div class="container">
+
+        <h1>Music Player</h1>
+        <p class="lead">This application lets you play your music stored on your remoteStorage server.</p>
+
+        
+        <audio id="player" controls="true"></audio>
+
+        <div id="folderList">
+
+            <div id="folderListTable">
+            </div>
+        </div>
+
+    </div> <!-- /container -->
+
+    <script id="folderListTemplate" type="text/x-jsrender">
+        <table class="table table-striped table-bordered">
+            <thead>
+                <tr><th>Song</th></tr>
+            </thead>
+            	<tbody>
+            {{fields entry}}
+                <tr>
+                    <td>
+                        <a href="#" data-file-name="{{>~key}}">{{>~key}}</a>
+                    </td>
+                </tr>
+            {{/fields}}
+            </tbody>
+        </table>
+    </script>
+
+    <script src="ext/js/jquery.js"></script>
+    <script src="ext/js/jsrender.js"></script>
+    <script src="ext/js/jso.js"></script>
+    <script src="ext/bootstrap/js/bootstrap.min.js"></script>
+    <script src="config/config.js"></script>
+    <script src="js/player.js"></script>
+    <script type="text/javascript">
+	$.views.tags({
+		fields: function( object ) {
+			var key,
+				ret = "";
+			for ( key in object ) {
+				if ( object.hasOwnProperty( key )) {
+					// For each property/field, render the content of the {{fields object}} tag, with "~key" as template parameter
+					ret += this.renderContent( object[ key ], { key: key });
+				}
+			}
+			return ret;
+		}
+	});
+
+	//Define a custom getFields helper function to iterate over fields and return
+	$.views.helpers({
+		getFields: function( object ) {
+			var key, value,
+				fieldsArray = [];
+			for ( key in object ) {
+				if ( object.hasOwnProperty( key )) {
+					value = object[ key ];
+					// For each property/field add an object to the array, with key and value
+					fieldsArray.push({
+						key: key,
+						value: value
+					});
+				}
+			}
+			// Return the array, to be rendered using {{for ~fields(object)}}
+			return fieldsArray;
+		}
+	});
+    </script>
+  </body>
+</html>

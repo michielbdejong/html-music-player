@@ -1,0 +1,3 @@
+var apiClientId       = 'html-music-player';
+var authorizeEndpoint = 'http://localhost/php-oauth/authorize.php';
+var apiEndpoint       = 'http://localhost/php-remoteStorage/api.php';
