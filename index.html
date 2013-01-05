@@ -34,7 +34,7 @@
                     {{if ~isDirectory(~key)}}
                         <i class="icon-folder-open"></i> <a class="dir" href="#" data-current-dir="{{>#parent.parent.data.dirName}}" data-dir-name="{{>~key}}">{{>~key}}</a>
                     {{else}}
-                        <i class="icon-play"></i> <a class="file" href="#" data-file-name="/{{>~key}}">{{>~key}}</a>
+                        <i class="icon-play"></i> <a class="file" href="#" data-current-dir="{{>#parent.parent.data.dirName}}" data-file-name="{{>~key}}">{{>~key}}</a>
                     {{/if}}
                     </td>
                 </tr>
