@@ -34,7 +34,14 @@ $(document).ready(function () {
             currentDirectoryEntries = new Array();
             // convert the map to an array
             for (i in response) {
-                currentDirectoryEntries.push({fileName: i, fileTime: response[i], isDirectory: i.lastIndexOf("/") === i.length - 1});          
+                if(i.lastIndexOf("/") === i.length - 1) {
+                    // directory
+                    currentDirectoryEntries.push({fileName: i.substring(0,i.length-1), fileTime: response[i], isDirectory: true});          
+                } else {
+                    // file
+                    currentDirectoryEntries.push({fileName: i, fileTime: response[i], isDirectory: false});          
+
+                }
             }
             currentDirectoryEntries.sort(sortDirectory);
 
