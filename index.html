@@ -31,12 +31,12 @@
             </thead>
             	<tbody>
             {{fields entry}}
-                <tr>
+                <tr id="entry_{{>~key}}">
                     <td>
                     {{if isDirectory}}
                         <i class="icon-folder-open"></i> <a class="dir" href="#" data-file-index="{{>~key}}">{{>fileName}}</a>
                     {{else}}
-                        <i class="icon-play"></i> <a id="file_{{>~key}}" class="file" href="#" data-file-index="{{>~key}}">{{>fileName}}</a>
+                        <i class="icon-play"></i> <a class="file" href="#" data-file-index="{{>~key}}">{{>fileName}}</a>
                     {{/if}}
                     </td>
                 </tr>

@@ -53,7 +53,7 @@ $(document).ready(function () {
             if (currentDirectoryName === playingDirectoryName) {
                 // if we watch the directory again we are playing 
                 // from we mark the file playing
-                $("a#file_" + playingFileIndex).addClass("text-warning");
+                $("tr#entry_" + playingFileIndex).addClass("success");
             }
         }
         xhr.send();
@@ -72,7 +72,7 @@ $(document).ready(function () {
             if (currentDirectoryName === playingDirectoryName) {
                 // if we still watch the same directory as where we play 
                 // from we mark the file playing
-                $("a#file_" + playingFileIndex).addClass("text-warning");
+                $("tr#entry_" + playingFileIndex).addClass("success");
             }
         }
         xhr.send();
@@ -101,7 +101,7 @@ $(document).ready(function () {
         if (currentDirectoryName === playingDirectoryName) {
             // if we still watch the same directory as where we play 
             // from we mark the file as not playing anymore
-            $("a#file_" + playingFileIndex).removeClass("text-warning");
+                $("tr#entry_" + playingFileIndex).removeClass("success");
         }
         playingFileIndex++;
         // as long as we find directories we move on...
