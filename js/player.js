@@ -37,6 +37,11 @@ $(document).ready(function () {
                 currentDirectoryEntries.push({fileName: i, fileTime: response[i], isDirectory: i.lastIndexOf("/") === i.length - 1});          
             }
             currentDirectoryEntries.sort(sortDirectory);
+
+            if (dirName !== "/") {
+                currentDirectoryEntries.unshift({fileName: "..", fileTime: 0, isDirectory: true});
+            }
+
             currentDirectoryName = dirName;
             $("#folderListTable").html($("#folderListTemplate").render({entry: currentDirectoryEntries}));
         }
@@ -65,10 +70,15 @@ $(document).ready(function () {
     });
 
     $(document).on('click', '#folderListTable a.dir', function() {
-        //alert($(this).data('fileIndex'));
-        //alert(JSON.stringify(currentDirectoryEntries[$(this).data('fileIndex')]));
-
-        renderFolderList(currentDirectoryName + currentDirectoryEntries[$(this).data('fileIndex')]['fileName']);
+        var dirName = currentDirectoryEntries[$(this).data('fileIndex')]['fileName'];
+        var filePath;
+        if(dirName === "..") {
+            secondToLastSlash = currentDirectoryName.lastIndexOf("/", currentDirectoryName.length - 2);
+            filePath = currentDirectoryName.substring(0, secondToLastSlash + 1);
+        } else {
+            filePath = currentDirectoryName + currentDirectoryEntries[$(this).data('fileIndex')]['fileName'];
+        }
+        renderFolderList(filePath);
     });
 
     document.getElementById("player").addEventListener('ended', function(e) {
