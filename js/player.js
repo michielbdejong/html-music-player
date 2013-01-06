@@ -34,13 +34,12 @@ $(document).ready(function () {
             currentDirectoryEntries = new Array();
             // convert the map to an array
             for (i in response) {
-                if(i.lastIndexOf("/") === i.length - 1) {
+                if (i.lastIndexOf("/") === i.length - 1) {
                     // directory
                     currentDirectoryEntries.push({fileName: i.substring(0,i.length-1), fileTime: response[i], isDirectory: true});          
                 } else {
                     // file
                     currentDirectoryEntries.push({fileName: i, fileTime: response[i], isDirectory: false});          
-
                 }
             }
             currentDirectoryEntries.sort(sortDirectory);
@@ -51,6 +50,11 @@ $(document).ready(function () {
 
             currentDirectoryName = dirName;
             $("#folderListTable").html($("#folderListTemplate").render({dirName: dirName, entry: currentDirectoryEntries}));
+            if (currentDirectoryName === playingDirectoryName) {
+                // if we watch the directory again we are playing 
+                // from we mark the file playing
+                $("a#file_" + playingFileIndex).addClass("text-warning");
+            }
         }
         xhr.send();
     }
@@ -65,6 +69,11 @@ $(document).ready(function () {
             var blob = new Blob([xhr.response]);
             document.getElementById("player").src = window.URL.createObjectURL(blob);
             document.getElementById("player").play();
+            if (currentDirectoryName === playingDirectoryName) {
+                // if we still watch the same directory as where we play 
+                // from we mark the file playing
+                $("a#file_" + playingFileIndex).addClass("text-warning");
+            }
         }
         xhr.send();
     }
@@ -79,7 +88,7 @@ $(document).ready(function () {
     $(document).on('click', '#folderListTable a.dir', function() {
         var dirName = currentDirectoryEntries[$(this).data('fileIndex')]['fileName'];
         var filePath;
-        if(dirName === "..") {
+        if (dirName === "..") {
             secondToLastSlash = currentDirectoryName.lastIndexOf("/", currentDirectoryName.length - 2);
             filePath = currentDirectoryName.substring(0, secondToLastSlash + 1);
         } else {
@@ -89,24 +98,29 @@ $(document).ready(function () {
     });
 
     document.getElementById("player").addEventListener('ended', function(e) {
+        if (currentDirectoryName === playingDirectoryName) {
+            // if we still watch the same directory as where we play 
+            // from we mark the file as not playing anymore
+            $("a#file_" + playingFileIndex).removeClass("text-warning");
+        }
         playingFileIndex++;
         // as long as we find directories we move on...
         while(playingFileIndex < playingDirectoryEntries.length && playingDirectoryEntries[playingFileIndex]['isDirectory']) {
             playingFileIndex++;
         }
-        if(playingFileIndex !== playingDirectoryEntries.length) {
+        if (playingFileIndex !== playingDirectoryEntries.length) {
             playSong();
         }
     });
 
     function sortDirectory(a, b) {
-        if(a.isDirectory && b.isDirectory) {
+        if (a.isDirectory && b.isDirectory) {
             return (a.fileName === b.fileName) ? 0 : (a.fileName < b.fileName) ? -1 : 1;
         }
-        if(a.isDirectory && !b.isDirectory) {
+        if (a.isDirectory && !b.isDirectory) {
             return -1;
         }
-        if(!a.isDirectory && b.isDirectory) {
+        if (!a.isDirectory && b.isDirectory) {
             return 1;
         }
         return (a.fileName === b.fileName) ? 0 : (a.fileName < b.fileName) ? -1 : 1;
