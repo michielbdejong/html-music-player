@@ -43,7 +43,7 @@ $(document).ready(function () {
             }
 
             currentDirectoryName = dirName;
-            $("#folderListTable").html($("#folderListTemplate").render({entry: currentDirectoryEntries}));
+            $("#folderListTable").html($("#folderListTemplate").render({dirName: dirName, entry: currentDirectoryEntries}));
         }
         xhr.send();
     }
