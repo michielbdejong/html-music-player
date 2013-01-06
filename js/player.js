@@ -97,7 +97,52 @@ $(document).ready(function () {
         renderFolderList(filePath);
     });
 
-    document.getElementById("player").addEventListener('ended', function(e) {
+    document.getElementById("player").addEventListener('ended', playNextSong);
+
+    document.getElementById("prev").addEventListener('click', function(e) {
+        if (currentDirectoryName === playingDirectoryName) {
+            // if we still watch the same directory as where we play 
+            // from we mark the file as not playing anymore
+                $("tr#entry_" + playingFileIndex).removeClass("success");
+        }
+        playingFileIndex--;
+        // as long as we find directories we move on...
+        while (playingFileIndex > 0 && playingDirectoryEntries[playingFileIndex]['isDirectory']) {
+            playingFileIndex--;
+        }
+        if (!playingDirectoryEntries[playingFileIndex]['isDirectory']) {
+            playSong();
+        }
+    });
+
+    document.getElementById("prev").addEventListener('click', playPrevSong);
+    document.getElementById("next").addEventListener('click', playNextSong);
+
+//    document.getElementById("player").addEventListener('playing', function(e) {
+//        $("span#duration").html(Math.floor(document.getElementById("player").duration));
+//    });
+
+//    document.getElementById("player").addEventListener('timeupdate', function(e) {
+//        $("span#currentTime").html(Math.floor(document.getElementById("player").currentTime));
+//    });
+
+    function playPrevSong() {
+        if (currentDirectoryName === playingDirectoryName) {
+            // if we still watch the same directory as where we play 
+            // from we mark the file as not playing anymore
+                $("tr#entry_" + playingFileIndex).removeClass("success");
+        }
+        playingFileIndex--;
+        // as long as we find directories we move on...
+        while (playingFileIndex >= 0 && playingDirectoryEntries[playingFileIndex]['isDirectory']) {
+            playingFileIndex--;
+        }
+        if (playingFileIndex > 0) {
+            playSong();
+        }
+    }
+
+    function playNextSong() {
         if (currentDirectoryName === playingDirectoryName) {
             // if we still watch the same directory as where we play 
             // from we mark the file as not playing anymore
@@ -105,13 +150,13 @@ $(document).ready(function () {
         }
         playingFileIndex++;
         // as long as we find directories we move on...
-        while(playingFileIndex < playingDirectoryEntries.length && playingDirectoryEntries[playingFileIndex]['isDirectory']) {
+        while (playingFileIndex < playingDirectoryEntries.length && playingDirectoryEntries[playingFileIndex]['isDirectory']) {
             playingFileIndex++;
         }
         if (playingFileIndex !== playingDirectoryEntries.length) {
             playSong();
         }
-    });
+    }
 
     function sortDirectory(a, b) {
         if (a.isDirectory && b.isDirectory) {
