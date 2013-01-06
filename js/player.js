@@ -83,7 +83,7 @@ $(document).ready(function () {
             secondToLastSlash = currentDirectoryName.lastIndexOf("/", currentDirectoryName.length - 2);
             filePath = currentDirectoryName.substring(0, secondToLastSlash + 1);
         } else {
-            filePath = currentDirectoryName + currentDirectoryEntries[$(this).data('fileIndex')]['fileName'];
+            filePath = currentDirectoryName + currentDirectoryEntries[$(this).data('fileIndex')]['fileName'] + "/";
         }
         renderFolderList(filePath);
     });
