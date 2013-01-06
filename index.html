@@ -31,10 +31,10 @@
             {{fields entry}}
                 <tr>
                     <td>
-                    {{if ~isDirectory(~key)}}
-                        <i class="icon-folder-open"></i> <a class="dir" href="#" data-current-dir="{{>#parent.parent.data.dirName}}" data-dir-name="{{>~key}}">{{>~key}}</a>
+                    {{if isDirectory}}
+                        <i class="icon-folder-open"></i> <a class="dir" href="#" data-file-index="{{>~key}}">{{>fileName}}</a>
                     {{else}}
-                        <i class="icon-play"></i> <a class="file" href="#" data-current-dir="{{>#parent.parent.data.dirName}}" data-file-name="{{>~key}}">{{>~key}}</a>
+                        <i class="icon-play"></i> <a class="file" href="#" data-file-index="{{>~key}}">{{>fileName}}</a>
                     {{/if}}
                     </td>
                 </tr>
@@ -81,12 +81,6 @@
 			}
 			// Return the array, to be rendered using {{for ~fields(object)}}
 			return fieldsArray;
-		}
-	});
-
-    $.views.helpers({
-		isDirectory: function( name ) {
-            return name.lastIndexOf("/") === name.length - 1;
 		}
 	});
 
