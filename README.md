@@ -4,6 +4,13 @@
 This application makes it possible to play music stored in a remoteStorage
 server.
 
+## Screenshots
+![html-music-player](https://github.com/fkooman/html-music-player/raw/master/docs/html-music-player-screenshot.png)
+
+## Features
+* Browse through "music" remoteStorage file system
+* Automatically play the next song in the directory
+
 ## Installation
 This application depends on the following components:
 
