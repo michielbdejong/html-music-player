@@ -5,7 +5,7 @@ mkdir -p ext/js
 mkdir -p ext/bootstrap
 
 # remoteStorage
-curl -o ext/js/remoteStorage.js http://remotestoragejs.com/build/0.7.0-head/remoteStorage.min.js
+curl -o ext/js/remoteStorage.js http://remotestoragejs.com/release/0.7.0-rc5/remoteStorage.min.js
 
 # jQuery
 curl -o ext/js/jquery.js http://code.jquery.com/jquery.min.js
