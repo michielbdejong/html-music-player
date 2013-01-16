@@ -50,8 +50,7 @@ remoteStorage.onWidget('ready', function () {
     }
 
     function playSong() {
-        var url = rootUri + "public/music" + playingDirectoryName + playingDirectoryEntries[playingFileIndex]['fileName'];
-        document.getElementById("player").src = window.URL.createObjectURL(blob);
+        document.getElementById("player").src = rootUri + "public/music" + playingDirectoryName + playingDirectoryEntries[playingFileIndex]['fileName'];
         document.getElementById("player").play();
         if (currentDirectoryName === playingDirectoryName) {
             // if we still watch the same directory as where we play 
