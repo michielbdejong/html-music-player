@@ -10,7 +10,7 @@
 
 <body>
     <div class="container">
-        <div id="remotestorage-widget"></div>
+        <div id="remotestorage-connect"></div>
         <h1>Music Player</h1>
         <p class="lead">This application lets you play music on your remoteStorage.</p>
 
@@ -68,7 +68,7 @@
     remoteStorage.claimAccess({
         music: 'r'
     }).then(function() {
-        remoteStorage.displayWidget('remotestorage-widget');
+        remoteStorage.displayWidget('remotestorage-connect');
         remoteStorage.music.dontSync();
     });
      
