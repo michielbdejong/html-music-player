@@ -16,7 +16,7 @@ remoteStorage.onWidget('ready', function () {
     function renderFolderList(dirName) {
         var accessToken = remoteStorage.getBearerToken();
         var xhr = new XMLHttpRequest();
-        xhr.open("GET", rootUri + "music" + dirName, true);
+        xhr.open("GET", rootUri + "public/music" + dirName, true);
         xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
         xhr.onload = function(e) {
             var response = JSON.parse(xhr.responseText);
@@ -50,22 +50,14 @@ remoteStorage.onWidget('ready', function () {
     }
 
     function playSong() {
-        var accessToken = jso_getToken("html-music-player", apiScope);
-        var xhr = new XMLHttpRequest();
-        xhr.open("GET", rootUri + "music" + playingDirectoryName + playingDirectoryEntries[playingFileIndex]['fileName'], true);
-        xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
-        xhr.responseType = "arraybuffer";
-        xhr.onload = function(e) {
-            var blob = new Blob([xhr.response]);
-            document.getElementById("player").src = window.URL.createObjectURL(blob);
-            document.getElementById("player").play();
-            if (currentDirectoryName === playingDirectoryName) {
-                // if we still watch the same directory as where we play 
-                // from we mark the file playing
-                $("tr#entry_" + playingFileIndex).addClass("success");
-            }
+        var url = rootUri + "public/music" + playingDirectoryName + playingDirectoryEntries[playingFileIndex]['fileName'];
+        document.getElementById("player").src = window.URL.createObjectURL(blob);
+        document.getElementById("player").play();
+        if (currentDirectoryName === playingDirectoryName) {
+            // if we still watch the same directory as where we play 
+            // from we mark the file playing
+            $("tr#entry_" + playingFileIndex).addClass("success");
         }
-        xhr.send();
     }
 
     $(document).on('click', '#folderListTable a.file', function() {
