@@ -14,8 +14,10 @@ server.
 ## Known bugs
 
 * remoteStorage icon not showing
+* back button goes back 2 songs instead of 1
 * css warnings due to Bootstrap library
 * css warnings due to remoteStorage.js library
-
+* app icon and favicon are missing
+* play cursor is displayed at end of bar (probably due to lack of Content-Length header?)
 
 That should be all!
