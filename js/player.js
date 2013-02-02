@@ -67,23 +67,6 @@ remoteStorage.onWidget('ready', function () {
     });
 
     document.getElementById("player").addEventListener('ended', playNextSong);
-
-    document.getElementById("prev").addEventListener('click', function(e) {
-        if (currentDirectoryName === playingDirectoryName) {
-            // if we still watch the same directory as where we play 
-            // from we mark the file as not playing anymore
-                $("tr#entry_" + playingFileIndex).removeClass("success");
-        }
-        playingFileIndex--;
-        // as long as we find directories we move on...
-        while (playingFileIndex > 0 && playingDirectoryEntries[playingFileIndex]['isDirectory']) {
-            playingFileIndex--;
-        }
-        if (!playingDirectoryEntries[playingFileIndex]['isDirectory']) {
-            playSong();
-        }
-    });
-
     document.getElementById("prev").addEventListener('click', playPrevSong);
     document.getElementById("next").addEventListener('click', playNextSong);
 
