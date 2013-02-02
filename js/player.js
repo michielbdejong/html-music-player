@@ -1,10 +1,5 @@
 remoteStorage.onWidget('ready', function () {
 
-    // rootUri, this should be available through fragment or using Webfinger
-    var rootUri = remoteStorage.getStorageHref()+'/';
-
-    var apiScope = ["music:r"];
-
     var playingFileIndex;
     var playingDirectoryName;
     // the files in the directory from which the current song is being played
@@ -14,28 +9,27 @@ remoteStorage.onWidget('ready', function () {
     var currentDirectoryEntries;
 
     function renderFolderList(dirName) {
-        var accessToken = remoteStorage.getBearerToken();
         var xhr = new XMLHttpRequest();
         xhr.open("GET", rootUri + "public/music" + dirName, true);
         xhr.setRequestHeader("Authorization", "Bearer " + accessToken);
-        xhr.onload = function(e) {
+        remoteStorage.music.getListing(dirName).then(function(listing) {
             var response = JSON.parse(xhr.responseText);
 
             currentDirectoryEntries = new Array();
             // convert the map to an array
-            for (i in response) {
-                if (i.lastIndexOf("/") === i.length - 1) {
+            for (var i=0; i<listing.length i++) {
+                if (listing[i].lastIndexOf("/") === listing[i].length - 1) {
                     // directory
-                    currentDirectoryEntries.push({fileName: i.substring(0,i.length-1), fileTime: response[i], isDirectory: true});          
+                    currentDirectoryEntries.push({fileName: listing[i].substring(0,listing[i].length-1), isDirectory: true});
                 } else {
                     // file
-                    currentDirectoryEntries.push({fileName: i, fileTime: response[i], isDirectory: false});          
+                    currentDirectoryEntries.push({fileName: listing[i], isDirectory: false});
                 }
             }
             currentDirectoryEntries.sort(sortDirectory);
 
             if (dirName !== "/") {
-                currentDirectoryEntries.unshift({fileName: "..", fileTime: 0, isDirectory: true});
+                currentDirectoryEntries.unshift({fileName: "(UP)", isDirectory: true});
             }
 
             currentDirectoryName = dirName;
@@ -45,12 +39,11 @@ remoteStorage.onWidget('ready', function () {
                 // from we mark the file playing
                 $("tr#entry_" + playingFileIndex).addClass("success");
             }
-        }
-        xhr.send();
+        });
     }
 
     function playSong() {
-        document.getElementById("player").src = rootUri + "public/music" + playingDirectoryName + playingDirectoryEntries[playingFileIndex]['fileName'];
+        document.getElementById("player").src = remoteStorage.getSongURL(playingDirectoryName + playingDirectoryEntries[playingFileIndex]['fileName']);
         document.getElementById("player").play();
         if (currentDirectoryName === playingDirectoryName) {
             // if we still watch the same directory as where we play 
@@ -98,14 +91,6 @@ remoteStorage.onWidget('ready', function () {
 
     document.getElementById("prev").addEventListener('click', playPrevSong);
     document.getElementById("next").addEventListener('click', playNextSong);
-
-//    document.getElementById("player").addEventListener('playing', function(e) {
-//        $("span#duration").html(Math.floor(document.getElementById("player").duration));
-//    });
-
-//    document.getElementById("player").addEventListener('timeupdate', function(e) {
-//        $("span#currentTime").html(Math.floor(document.getElementById("player").currentTime));
-//    });
 
     function playPrevSong() {
         if (currentDirectoryName === playingDirectoryName) {
