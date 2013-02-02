@@ -49,22 +49,13 @@
     </script>
 
     <script src="ext/js/remoteStorage-7b2d0b31.min.js"></script>
+    <script src="ext/js/music.js"></script>
     <script src="ext/js/jquery.js"></script>
     <script src="ext/js/jsrender.js"></script>
     <script src="ext/bootstrap/js/bootstrap.min.js"></script>
     <script src="config/config.js"></script>
     <script src="js/player.js"></script>
     <script type="text/javascript">
-	remoteStorage.defineModule('music', function(privateClient, publicClient) {
-        return {
-            exports: {
-                dontSync: function () {
-                    privateClient.release('');
-                    publicClient.release('');
-                }
-            }
-        };
-    });
     remoteStorage.claimAccess({
         music: 'r'
     }).then(function() {
