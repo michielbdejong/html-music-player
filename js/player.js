@@ -1,4 +1,4 @@
-remoteStorage.onWidget('ready', function () {
+remoteStorage.on('ready', function () {
 
     var playingFileIndex;
     var playingDirectoryName;

@@ -1,9 +1,9 @@
-remoteStorage.defineModule('music', function(privateClient, publicClient) {
+RemoteStorage.defineModule('music', function(privateClient, publicClient) {
   return {
     exports: {
       dontSync: function () {
-        privateClient.release('');
-        publicClient.release('');
+        privateClient.cache('', false);
+        publicClient.cache('', false);
       },
       getListing: function(path) {
         return publicClient.getListing(path);
