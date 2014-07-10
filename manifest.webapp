@@ -1,1 +1,18 @@
-{"name":"music","description":"No description available","version":"0.0.1","launch_path":"/","icons":{"16":"/icon_x16.png","30":"/icon_x30.png","32":"/icon_x32.png","48":"/icon_x48.png","60":"/icon_x60.png","64":"/icon_x64.png","90":"/icon_x90.png","128":"/icon_x128.png","256":"/icon_x256.png"},"installs_allowed_from":["*"],"developer":{"name":"Michiel de Jong","url":"https://michielbdejong.com/"}}
+{"name":"music","description":"No description available","version":"0.0.1","launch_path":"/","icons":{"16":"/icon_x16.png","30":"/icon_x30.png","32":"/icon_x32.png","48":"/icon_x48.png","60":"/icon_x60.png","64":"/icon_x64.png","90":"/icon_x90.png","128":"/icon_x128.png","256":"/icon_x256.png"},"installs_allowed_from":["*"],"developer":{"name":"Michiel de Jong","url":"https://michielbdejong.com/"},
+"assets": [
+  "index.html",
+  "the_music_icon.png",
+  "ext/bootstrap/css/bootstrap-responsive.css",
+  "ext/bootstrap/css/bootstrap-responsive.min.css",
+  "ext/bootstrap/css/bootstrap.css",
+  "ext/bootstrap/css/bootstrap.min.css",
+  "ext/bootstrap/img/glyphicons-halflings-white.png",
+  "ext/bootstrap/img/glyphicons-halflings.png",
+  "ext/bootstrap/js/bootstrap.js",
+  "ext/bootstrap/js/bootstrap.min.js",
+  "ext/js/jquery.js",
+  "ext/js/jsrender.js",
+  "ext/js/music.js",
+  "ext/js/remotestorage.js",
+  "js/player.js"
+]}
