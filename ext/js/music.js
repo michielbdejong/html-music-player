@@ -2,8 +2,8 @@ RemoteStorage.defineModule('music', function(privateClient, publicClient) {
   return {
     exports: {
       dontSync: function () {
-        privateClient.cache('', false);
-        publicClient.cache('', false);
+        privateClient.cache('', 'FLUSH');
+        publicClient.cache('', 'FLUSH');
       },
       getListing: function(path) {
         return publicClient.getListing(path);
